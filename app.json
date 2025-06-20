@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "expo-user-management",
-    "slug": "expo-user-management",
+    "name": "go native",
+    "slug": "ego-native",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
