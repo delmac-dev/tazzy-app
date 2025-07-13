@@ -1,9 +1,9 @@
 import { Dev } from "components/Dev";
 
-export default function Schedules() {
+export default function Account() {
     return (
         <>
-            <Dev title='Schedules' />
+            <Dev title='my account' />
         </>
     )
 }
