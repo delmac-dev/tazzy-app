@@ -1,9 +1,0 @@
-import { Dev } from "components/Dev";
-
-export default function Schedules() {
-    return (
-        <>
-            <Dev title='Schedules' />
-        </>
-    )
-}

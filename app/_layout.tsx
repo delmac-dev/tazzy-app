@@ -1,13 +1,23 @@
-import { Tabs } from "expo-router";
-import TabBar from "components/common/tab-bar";
+import React from "react";
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import "../global.css";
+import { useAuthStore } from "lib/stores/auth-store";
 
 export default function RootLayout() {
+    const { isLoggedIn } = useAuthStore();
 
     return (
-        <Tabs
-            tabBar={(props) => <TabBar {...props} />}
-            screenOptions={{headerShown: false}}
-        />
+        <React.Fragment>
+            <StatusBar style="auto" />
+            <Stack>
+                <Stack.Protected guard={isLoggedIn}>
+                    <Stack.Screen name="(tabs)" options={{headerShown: false}} />
+                </Stack.Protected>
+                <Stack.Protected guard={!isLoggedIn}>
+                    <Stack.Screen name="login" />
+                </Stack.Protected>
+            </Stack>
+        </React.Fragment>
     )
 }
