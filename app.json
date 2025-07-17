@@ -17,7 +17,7 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/icons/splash-icon-dark.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff",
       "dark": {
         "image": "./assets/icons/splash-icon-light.png",
