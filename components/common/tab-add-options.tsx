@@ -3,6 +3,7 @@ import { CalendarDotsIcon, ListChecksIcon, PlusIcon } from 'phosphor-react-nativ
 import { useEffect, useState } from 'react';
 import { Modal, Pressable, TouchableOpacity, View } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, runOnJS } from 'react-native-reanimated';
+import colors from 'tailwindcss/colors';
 
 export default function TabAddOptions({visible, closeModal}:{visible: boolean, closeModal: () => void}) {
   const [internalVisible, setInternalVisible] = useState(false);
@@ -127,15 +128,15 @@ export default function TabAddOptions({visible, closeModal}:{visible: boolean, c
           {actionButtons.map((btn, index) => (
             <Animated.View key={index} style={btn.style} className={cn("overflow-hidden rounded-full", btn.className)}>
               <Pressable
-                className="h-16 aspect-square bg-sky-600 rounded-full flex items-center justify-center"
+                className="h-16 aspect-square bg-neutral-800 rounded-full flex items-center justify-center"
                 onPress={btn.onPress}
                 android_ripple={{
-                  color: "rgba(223, 242, 254, 0.2)",
+                  color: colors.neutral[700],
                   borderless: false,
                   radius: 48,
                 }}
               >
-                <btn.icon size={28} color="#fafafa" weight={btn.fill? 'fill': 'regular'} />
+                <btn.icon size={28} color={colors.neutral[50]} weight={btn.fill? 'fill': 'regular'} />
                 </Pressable>
             </Animated.View>
           ))}

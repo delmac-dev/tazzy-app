@@ -1,14 +1,16 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {Keyboard, ScrollView, TextInput, StatusBar, View, Dimensions} from 'react-native';
+import {Keyboard, ScrollView, TextInput, StatusBar, View, Dimensions, Platform} from 'react-native';
 
 interface Props extends React.ComponentProps<typeof ScrollView> {
   additionalScrollHeight?: number;
+  noHeightCheck?: boolean;
 }
 
 const KeyboardScrollView = ({
   children,
   additionalScrollHeight,
   contentContainerStyle,
+  noHeightCheck,
   ...props
 }: Props) => {
   const scrollViewRef = useRef<ScrollView>(null);
@@ -121,7 +123,8 @@ const KeyboardScrollView = ({
     >
       <View
         style={{
-          minHeight: Math.max((scrollViewSizeRef.current || SCREEN_HEIGHT) - additionalPadding, 0),
+          minHeight: noHeightCheck && isKeyboardVisible? 0 : Math.max((scrollViewSizeRef.current || SCREEN_HEIGHT) - additionalPadding, 0),
+          paddingBottom: noHeightCheck ? additionalPadding : 0
         }}
       >
         {children}

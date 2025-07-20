@@ -1,5 +1,6 @@
 import { Icon } from "phosphor-react-native";
 import { Pressable, View } from "react-native";
+import colors from "tailwindcss/colors";
 
 type TabBarButtonProps = {
   icon: Icon
@@ -14,12 +15,12 @@ export default function TabButton(props: TabBarButtonProps) {
         onPress={() => !props.isFocused? props.onPress(): null}
         className='w-full h-full items-center justify-center'
         android_ripple={{
-          color: "rgba(229, 229, 229, 1)",
+          color: colors.neutral[200],
           borderless: false,
           radius: 48,
         }}
       >
-        <props.icon size={28} color={props.isFocused ? '#0284c7': '#141414'} weight={props.isFocused? "duotone": "regular"} />
+        <props.icon size={28} color={colors.neutral[800]} weight={props.isFocused? "duotone": "regular"} />
       </Pressable>
     </View>
   )
