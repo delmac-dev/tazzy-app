@@ -13,9 +13,14 @@
     "plugins": [
       "expo-router",
       "expo-secure-store",
-      ["expo-asset",{
-        "assets": [""]
-      }]
+      [
+        "expo-asset",
+        {
+          "assets": [
+            ""
+          ]
+        }
+      ]
     ],
     "orientation": "portrait",
     "icon": "./assets/icons/icon.png",
@@ -41,11 +46,20 @@
       }
     },
     "android": {
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icons/adaptive-icon.png",
         "monochromeImage": "./assets/icons/adaptive-icon-monochrome.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.delmac.tazzy"
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "201c9c9f-0513-4469-b52c-2668e60caf76"
       }
-    }
+    },
+    "owner": "delmac_dev"
   }
 }
