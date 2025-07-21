@@ -19,11 +19,10 @@ async function signOut() {
 
   return (
     <Dev2
-      className='bg-red-50'
       title='This is the home'
       color='orange'
       emoji='🏠'
-      btns={[{label: 'Sign Out', action: signOut }]}
+      btns={[{label: 'Sign Out', action: signOut },{label: 'Go to test', action: () => router.push('/test')},{label: 'Go to test 2', action: () => router.push('/test-2')}, {label: 'Go to test 3', action: () => router.push('/test-3')}]}
     />
   );
 }
