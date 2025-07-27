@@ -6,7 +6,14 @@ import { Modal, Pressable, TouchableOpacity, View } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, runOnJS } from 'react-native-reanimated';
 import colors from 'tailwindcss/colors';
 
-export default function TabAddOptions({visible, closeModal}:{visible: boolean, closeModal: () => void}) {
+type Props = {
+  visible: boolean, 
+  closeModal: () => void,
+  setOpenActivitySheet: React.Dispatch<React.SetStateAction<boolean>>,
+  setOpenScheduleSheet: React.Dispatch<React.SetStateAction<boolean>>,
+}
+
+export default function TabAddOptions({visible, closeModal, setOpenActivitySheet, setOpenScheduleSheet}:Props) {
   const router = useRouter();
   const [internalVisible, setInternalVisible] = useState(false);
 
@@ -95,7 +102,7 @@ export default function TabAddOptions({visible, closeModal}:{visible: boolean, c
       className: "absolute bottom-20 -left-16",
       onPress: () => {
         playCloseAnimation();
-        router.push({pathname: "tasks/form", params: { type: 'new' }});
+        setOpenActivitySheet(true);
       },
       icon: ListChecksIcon,
       fill: true
@@ -105,7 +112,7 @@ export default function TabAddOptions({visible, closeModal}:{visible: boolean, c
       className: "absolute bottom-20 -right-16",
       onPress: () => {
         playCloseAnimation();
-        router.push({pathname: "schedules/form", params: { type: 'new' }})
+        setOpenScheduleSheet(true);
       },
       icon: CalendarDotsIcon,
       fill: true

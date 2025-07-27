@@ -14,6 +14,7 @@ export default function Layout() {
       <Stack.Screen name='tasks/[id]' options={{ title: 'Task Details'}} />
       <Stack.Screen name='profile/index' options={{ title: 'Profile'}} />
       <Stack.Screen name='templates/index' options={{ title: 'Templates'}} />
+      <Stack.Screen name='open-activities/index' options={{ title: 'Open Activities'}} />
     </Stack>
   )
 }

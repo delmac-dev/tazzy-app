@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { DeviceMobileCameraIcon, DiamondsFourIcon, FileTextIcon, MoonIcon, PaletteIcon, ShieldCheckIcon, SignOutIcon, SunIcon, UserIcon } from "phosphor-react-native";
+import { DeviceMobileCameraIcon, DiamondsFourIcon, FileTextIcon, LinkBreakIcon, MoonIcon, PaletteIcon, ShieldCheckIcon, SignOutIcon, SunIcon, UserIcon } from "phosphor-react-native";
 import { Alert, Button, Image, ScrollView, Text, View } from "react-native";
 
 import BottomSheet, { BottomSheetBackdrop, BottomSheetHandle, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
@@ -34,6 +34,7 @@ export default function Account() {
   const options:IAccountCard["data"] = [
     { name: "Edit Profile", icon: UserIcon, action: () => router.push("profile"), type: "page"},
     { name: "Templates", icon: DiamondsFourIcon, action: () => router.push("templates"), type: "page"},
+    { name: "Open Activities", icon: LinkBreakIcon, action: () => router.push("open-activities"), type: "page"},
     { name: "Change Theme", icon: PaletteIcon, action: () => sheetRef.current?.present(), type: "sheet", leftSection: "light"},
     { name: "Terms and Conditions", icon: FileTextIcon, action: () => router.push("terms"), type: "page"},
     { name: "Privacy Policy", icon: ShieldCheckIcon, action: () => router.push("privacy"), type: "page"},
@@ -59,9 +60,9 @@ export default function Account() {
         </View>
       </View>
       <View className="gap-5">
-        <AccountCard data={[options[0], options[1], options[2]]} />
-        <AccountCard data={[options[3], options[4]]} />
-        <AccountCard data={[options[5]]} />
+        <AccountCard data={[options[0], options[1], options[2], options[3]]} />
+        <AccountCard data={[options[4], options[5]]} />
+        <AccountCard data={[options[6]]} />
       </View>
       <View className="mt-7">
         <Text className="text-center text-sm text-neutral-500 font-normal">v1.0.0 — Beta</Text>
