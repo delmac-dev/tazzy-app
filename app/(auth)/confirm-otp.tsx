@@ -3,8 +3,8 @@ import React from 'react'
 
 export default function ConfirmOTP() {
   return (
-    <View>
-      <Text>ConfirmOTP</Text>
+    <View className='flex-1 items-center justify-center'>
+      <Text>Confirm OTP</Text>
     </View>
   )
 }

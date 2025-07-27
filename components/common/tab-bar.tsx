@@ -18,7 +18,7 @@ export default function TabBar({ state, navigation }:BottomTabBarProps){
       />
       <TabButton
         icon={TimerIcon}
-        isFocused={state.index === 2}
+        isFocused={state.index === 1}
         onPress={() => navigation.navigate('schedules')}
       />
       <View className='overflow-hidden rounded-full mx-3'>
@@ -36,12 +36,12 @@ export default function TabBar({ state, navigation }:BottomTabBarProps){
       </View>
       <TabButton
         icon={BellSimpleIcon}
-        isFocused={state.index === 3}
+        isFocused={state.index === 2}
         onPress={() => navigation.navigate('notifications')}
       />
       <TabButton
         icon={UserIcon}
-        isFocused={state.index === 1}
+        isFocused={state.index === 3}
         onPress={() => navigation.navigate('account')}
       />
       <TabAddOptions visible={modalVisible} closeModal={() => setModalVisible(false)} />

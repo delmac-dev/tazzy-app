@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { cn } from 'lib/utils';
 import { CalendarDotsIcon, ListChecksIcon, PlusIcon } from 'phosphor-react-native';
 import { useEffect, useState } from 'react';
@@ -6,6 +7,7 @@ import Animated, { useSharedValue, useAnimatedStyle, withTiming, runOnJS } from 
 import colors from 'tailwindcss/colors';
 
 export default function TabAddOptions({visible, closeModal}:{visible: boolean, closeModal: () => void}) {
+  const router = useRouter();
   const [internalVisible, setInternalVisible] = useState(false);
 
   // Shared animated values
@@ -91,14 +93,20 @@ export default function TabAddOptions({visible, closeModal}:{visible: boolean, c
     {
       style: [taskStyle],
       className: "absolute bottom-20 -left-16",
-      onPress: () => console.log('Add New Task'),
+      onPress: () => {
+        playCloseAnimation();
+        router.push({pathname: "tasks/form", params: { type: 'new' }});
+      },
       icon: ListChecksIcon,
       fill: true
     },
     {
       style: [schedStyle],
       className: "absolute bottom-20 -right-16",
-      onPress: () => console.log('Add New Schedule'),
+      onPress: () => {
+        playCloseAnimation();
+        router.push({pathname: "schedules/form", params: { type: 'new' }})
+      },
       icon: CalendarDotsIcon,
       fill: true
     },

@@ -1,74 +1,108 @@
-import React, { useState } from 'react'
-import { supabase } from '../../lib/supabase'
-import Button from 'components/button';
-import { View, Text, Alert, StatusBar } from 'react-native';
-import { Link } from 'expo-router';
-import { AtIcon, KeyIcon } from 'phosphor-react-native';
-import KeyboardScrollView from '~/components/common/keyboard-scrollview';
-import InputTypeOne from '~/components/form/input-type-one';
+import { supabase } from '../../lib/supabase';
+import { View, Text, Alert, ScrollView } from 'react-native';
+import { Link, useRouter } from 'expo-router';
+import { EnvelopeSimpleIcon, LockSimpleIcon } from 'phosphor-react-native';
 import LegalSubtext from '~/components/common/legal-subtext';
+import Animated, { useAnimatedStyle } from 'react-native-reanimated';
+import { useGradualAnimation } from '~/lib/hooks/use-gradual-animation';
+import Button from '~/components/form/button';
+import TextInput from '~/components/form/text-input';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { ZSignUp } from "~/lib/schemas";
+import { ISignUp } from '~/lib/types';
+import { useMutation } from '@tanstack/react-query';
 
 export default function SignUp() {
+  const router = useRouter();
+  const { height } = useGradualAnimation();
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
+  const defaultValues = {
+    email: "",
+    password: "",
+    confirmPassword: ""
+  }
 
-  async function signUpWithEmail() {
-    setLoading(true)
-    const { data: { session }, error } = await supabase.auth.signUp({ email: email, password: password})
+  const { control, handleSubmit, reset } = useForm<ISignUp>({
+    defaultValues,
+    resolver: zodResolver(ZSignUp),
+  });
 
-    if (error) Alert.alert(error.message);
+  const {mutate, isPending} = useMutation({
+    mutationFn: async ({ email, password }:ISignUp) => {
+      const { error } = await supabase.auth.signUp({ email, password });
+      if (error) throw new Error(error.message);
+    },
+    onSuccess: () => {
+      router.push("/");
+    },
+    onError: (error) => {
+      Alert.alert(error.message);
+    },
+    onSettled:() => {
+      reset(defaultValues);
+    }
+  });
 
-    setLoading(false)
-  };
+  const keyboardPadding = useAnimatedStyle(() => {
+    return {
+      height: height.value,
+    };
+  }, []);
 
   return (
-    <KeyboardScrollView keyboardShouldPersistTaps="handled" noHeightCheck={true}>
-      <View className="flex-1 justify-between gap-5 pt-safe bg-white">
-        <View>
-          <View className='py-12 px-5 gap-5'>
-            <Text className='text-2xl font-medium text-neutral-950'>Join Tazzy Today</Text>
-            <Text className='text-lg font-normal text-neutral-700'>Get all your schedules in one place without any hassle, it's quick and easy.</Text>
-          </View>
-          <View className='gap-5'>
-            <InputTypeOne
-              icon={AtIcon} 
-              onChangeText={(text) => setEmail(text)}
-              value={email}
-              placeholder="Email"
-              autoCapitalize="none"
-              keyboardType="email-address"
-            />
-            <InputTypeOne
-              icon={KeyIcon} 
-              onChangeText={(text) => setPassword(text)}
-              value={password}
-              secureTextEntry={true}
-              placeholder="Password"
-              autoCapitalize="none"
-            />
-            <InputTypeOne
-              icon={KeyIcon} 
-              onChangeText={(text) => {}}
-              value={password}
-              secureTextEntry={true}
-              placeholder="Confirm Password"
-              autoCapitalize="none"
-            />
-            <LegalSubtext />
-          </View>
+    <View className="flex-1 pt-safe bg-neutral-50">
+      <View className='px-5 gap-2 py-12'>
+        <Text className='text-xl font-medium text-neutral-700'>Join Tazzy Today</Text>
+        <Text className='text-base w-full max-w-80 font-normal text-neutral-600'>Get all your schedules in one place without any hassle, it's quick and easy.</Text>
+      </View>
+      <ScrollView className='flex-1' contentContainerClassName='gap-5'>
+        <TextInput
+          name="email"
+          control={control}
+          label="Email"
+          autoCapitalize='none'
+          icon={EnvelopeSimpleIcon}
+          keyboardType='email-address'
+          placeholder='Enter your email'
+        />
+        <TextInput
+          name="password"
+          control={control}
+          label='Password' 
+          icon={LockSimpleIcon}
+          placeholder="Password"
+          viewSwitchable={true} 
+          secureTextEntry={true}
+          autoCapitalize="none"
+        />
+        <TextInput
+          name="confirmPassword"
+          control={control}
+          label='Confirm Password' 
+          icon={LockSimpleIcon}
+          placeholder="Password"
+          viewSwitchable={true} 
+          secureTextEntry={true}
+          autoCapitalize="none"
+        />
+        <LegalSubtext />
+      </ScrollView>
+      <View className='relative w-full py-5 gap-4'>
+        <View className='w-full'>
+          <Button
+            label={isPending? 'Loading...':'Sign Up'} 
+            disabled={isPending} 
+            onPress={handleSubmit((data) => mutate(data))}
+          />
         </View>
-        <View className='relative w-full z-50'>
-          <View className='pb-5 px-8 justify-center flex-row flex-wrap'>
-            <Text className='text-xs text-neutral-600'>Already have an account? </Text>
-            <Link href={"/login"} className='text-xs underline text-neutral-600'>Sign In.</Link>
-          </View>
-          <View className='w-full'>
-            <Button title={loading? 'Loading...':'Sign Up'} theme='dark0' disabled={loading} onPress={signUpWithEmail}/>
-          </View>
+        <View className='px-8 justify-center items-center'>
+          <Link href={"/login"} replace className='text-xs underline text-neutral-600'>
+            Already have an account? Sign In.
+          </Link>
         </View>
       </View>
-    </KeyboardScrollView>
+      <Animated.View style={keyboardPadding} />
+    </View>
   )
 }

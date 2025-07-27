@@ -1,111 +1,49 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import {
-  View,
-  KeyboardAvoidingView,
-  TextInput,
-  StyleSheet,
-  Text,
-  Platform,
-  TouchableWithoutFeedback,
-  Button,
-  Keyboard,
-  StatusBar,
-  ScrollView,
-  FlatList
-} from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import KeyboardScrollView from '~/components/common/keyboard-scrollview';
+import { useNavigation } from 'expo-router';
+import { LockSimpleIcon, UserIcon } from 'phosphor-react-native';
+import { useLayoutEffect } from 'react';
+import { View } from 'react-native';
+import Animated, { useAnimatedStyle } from 'react-native-reanimated';
+import AvatarSelectInput from '~/components/form/avatar-select-input';
+import Button from '~/components/form/button';
+import ColorSelectInput from '~/components/form/color-select-input';
+import EmojiSelectInput from '~/components/form/emoji-select-input';
+import LocationSelectInput from '~/components/form/location-select-input';
+import SearchInput from '~/components/form/search-input';
+import TextInput from '~/components/form/text-input';
+import TextSelectInput from '~/components/form/text-select-input';
+import { useGradualAnimation } from '~/lib/hooks/use-gradual-animation';
 
 export default function Test() {
-  const additionalScrollHeight = 0;
-  const scrollViewRef = useRef<ScrollView>(null);
-  const scrollPositionRef = useRef<number>(0);
-  const scrollContentSizeRef = useRef<number>(0);
-  const scrollViewSizeRef = useRef<number>(0);
+  const { height } = useGradualAnimation();
+  const navigation = useNavigation();
 
-  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
-  const [additionalPadding, setAdditionalPadding] = useState(0);
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: "Test Input",
+      headerShown: true,
+    });
+  }, [navigation]);
 
-  const scroll_to_position = useCallback((toPosition: number, animated?: boolean) => {
-    scrollViewRef.current?.scrollTo({ y: toPosition, animated: !!animated });
-    scrollPositionRef.current = toPosition;
+  const keyboardPadding = useAnimatedStyle(() => {
+    return {
+      height: height.value,
+    };
   }, []);
 
-  const additional_scroll = useMemo(() => additionalScrollHeight ?? 0, [additionalScrollHeight],);
-
-  const android_statusbar_offset = useMemo(() => StatusBar.currentHeight ?? 0,[]);
-
-  useEffect(() => {
-      const didShowListener = Keyboard.addListener('keyboardDidShow', frames => {
-        const keyboardY = frames.endCoordinates.screenY;
-        const keyboardHeight = frames.endCoordinates.height;
-        setAdditionalPadding(Math.ceil(keyboardHeight));
-
-        console.log('Keyboard shown', frames);
-        
-    
-        setTimeout(() => {
-          setIsKeyboardVisible(true);
-        }, 100);
-  
-        // const currentlyFocusedInput = TextInput.State.currentlyFocusedInput();
-        // const currentScrollY = scrollPositionRef.current;
-  
-        // currentlyFocusedInput?.measureInWindow((_x, y, _width, height) => {
-        //   const endOfInputY = y + height + ANDROID_STATUSBAR_OFFSET;
-        //   const deltaToScroll = endOfInputY - keyboardY;
-  
-        //   if (deltaToScroll < 0) {
-        //     return;
-        //   }
-  
-        //   const scrollPositionTarget =
-        //     currentScrollY + deltaToScroll + ADDITIONAL_SCROLL;
-        //     SCROLL_TO_POSITION(scrollPositionTarget, true);
-        // });
-      });
-  
-      const didHideListener = Keyboard.addListener('keyboardDidHide', () => {
-        setAdditionalPadding(0);
-        setIsKeyboardVisible(false);
-      });
-  
-      const willHideListener = Keyboard.addListener('keyboardWillHide', frames => {
-          // iOS only, scroll back to initial position to avoid flickering
-          // const keyboardHeight = frames.endCoordinates.height;
-          // const currentScrollY = scrollPositionRef.current;
-  
-          // if (currentScrollY <= 0) {
-          //   return;
-          // }
-  
-          // const scrollPositionTarget = currentScrollY - keyboardHeight;
-          // scroll_to_position(scrollPositionTarget, true);
-        },
-      );
-  
-      return () => {
-        didShowListener.remove();
-        didHideListener.remove();
-        willHideListener.remove();
-      };
-    }, [additional_scroll, android_statusbar_offset, scroll_to_position]);
-
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <ScrollView 
-        contentContainerStyle={{ padding: 20 }}
-      >
-        {Array.from({ length: 30 }).map((_, i) => (
-          <View key={i} className="mb-5">
-            <Text className="mb-2 font-bold">Field {i + 1}</Text>
-            <TextInput
-              placeholder={`Enter text for Field ${i + 1}`}
-              className="border border-gray-300 rounded px-4 py-3"
-            />
-          </View>
-        ))}
-      </ScrollView>
-    </SafeAreaView>
+    <View className='flex-1 bg-neutral-50'>
+      <View className='flex-1 gap-5 py-5'>
+        {/* <TextInput label="Username" icon={UserIcon} editable={false} />
+        <TextInput label='Password' icon={LockSimpleIcon} viewSwitchable={true} secureTextEntry={true} /> */}
+        <Button label='Sign Up' />
+        <ColorSelectInput />
+        <SearchInput />
+        <LocationSelectInput />
+        <TextSelectInput />
+        <EmojiSelectInput />
+        <AvatarSelectInput />
+      </View>
+      <Animated.View style={keyboardPadding} />
+    </View>
   )
 };
