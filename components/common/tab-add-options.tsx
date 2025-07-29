@@ -35,12 +35,12 @@ export default function TabAddOptions({ visible, closeModal, setOpenActivityShee
   };
 
   const newActivityPress = () => {
-    closeModal();
+    handleClose();
     setOpenActivitySheet(true);
   }
 
   const newSchedulePress = () => {
-    closeModal();
+    handleClose();
     setOpenScheduleSheet(true);
   }
 
