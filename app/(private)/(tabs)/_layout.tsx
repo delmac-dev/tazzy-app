@@ -9,7 +9,7 @@ export default function Layout() {
       tabBar={(props) => <TabBar {...props} />}
       screenOptions={{
         header: (props)=> <TabHeaderBar {...props} />,
-        animation: "fade"
+        animation: "none"
       }}
     >
       <Tabs.Screen name="index" options={{title: "Home"}} />

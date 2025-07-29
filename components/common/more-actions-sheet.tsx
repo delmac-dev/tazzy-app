@@ -28,19 +28,22 @@ export default function MoreActionsSheet(props: Props) {
   return (
     <BottomSheetModal
       ref={sheetRef}
-      enableDynamicSizing
       onDismiss={handleDismiss}
-      backdropComponent={(props) => <BottomSheetBackdrop {...props} appearsOnIndex={0} disappearsOnIndex={-1} pressBehavior="close" />}
-      handleComponent={(props) => <BottomSheetHandle {...props} style={{backgroundColor: colors.neutral[50]}} />}
+      backgroundStyle={{backgroundColor: colors.neutral[50]}}
+      backdropComponent={(props) => (
+        <BottomSheetBackdrop
+          {...props} 
+          disappearsOnIndex={-1} 
+          pressBehavior="close" 
+        />
+      )}
     >
-      <BottomSheetView className="bg-neutral-50">
-        <View className="pt-5 pb-5">
-          <View className="px-5">
-            <Text className="text-lg font-medium text-neutral-600 text-center">{props.label}</Text>
-          </View>
-          <View className="py-5">
-            {props.children}
-          </View>
+      <BottomSheetView className="pt-5 pb-5">
+        <View className="px-5">
+          <Text className="text-lg font-medium text-neutral-700 text-center">{props.label}</Text>
+        </View>
+        <View className="py-5">
+          {props.children}
         </View>
       </BottomSheetView>
     </BottomSheetModal>

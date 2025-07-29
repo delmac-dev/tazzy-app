@@ -18,11 +18,13 @@ export default function TabBar({ state, navigation }:BottomTabBarProps){
   const activityOptions:IAccountCard["data"] = [
     { 
       name: "Start from scratch", 
-      icon: PencilSimpleLineIcon , 
+      icon: PencilSimpleLineIcon, 
       type: "page",
       action: () => {
         setOpenActivitySheet(false);
-        router.push({pathname: "tasks/form", params: { type: 'new' }});
+        setTimeout(() => {
+          router.push({ pathname: "tasks/form", params: { type: 'new' } });
+        }, 300);
       }, 
     },
     { 
@@ -31,7 +33,9 @@ export default function TabBar({ state, navigation }:BottomTabBarProps){
       type: "page",
       action: () => {
         setOpenActivitySheet(false);
-        router.push("open-activities");
+        setTimeout(() => {
+          router.push("open-activities");
+        }, 300);
       }, 
     },
   ];
@@ -43,7 +47,9 @@ export default function TabBar({ state, navigation }:BottomTabBarProps){
       type: "page",
       action: () => {
         setOpenScheduleSheet(false);
-        router.push({pathname: "schedules/form", params: { type: 'new' }});
+        setTimeout(() => {
+          router.push({pathname: "schedules/form", params: { type: 'new' }});
+        }, 300);
       }, 
     },
     { 
@@ -52,7 +58,9 @@ export default function TabBar({ state, navigation }:BottomTabBarProps){
       type: "page",
       action: () => {
         setOpenScheduleSheet(false);
-        router.push("templates");
+        setTimeout(() => {
+          router.push("templates");
+        }, 300);
       },
     },
   ];

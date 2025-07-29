@@ -8,8 +8,8 @@ export default function TabHeaderBar(props: BottomTabHeaderProps) {
 
   return (
     <View className='w-full pt-safe bg-neutral-50'>
-      <View className='h-12 flex-row items-center justify-center px-5'>
-        <Text className='text-xl font-medium text-neutral-800'>
+      <View className='h-14 flex-row items-center justify-center px-5'>
+        <Text className='text-lg font-medium text-neutral-700'>
           {title}
         </Text>
       </View>

@@ -1,3 +1,4 @@
+import { ImageSourcePropType } from "react-native";
 
 export const ONBOARDING_CONTENT = [
   {
@@ -26,6 +27,25 @@ export const SCHEDULE_COLORS = [
   { name: "grape", color: { hex: "#AA61BB", rgb: "170, 97, 187" } },
   { name: "flamingo", color: { hex: "#D4847B", rgb: "212, 132, 123" } }
 ];
+
+export const AVATARS: Record<string, ImageSourcePropType> = {
+  avatar1: require('@/assets/avatars/blue_2.jpg'),
+  avatar2: require('@/assets/avatars/blue.jpg'),
+  avatar3: require('@/assets/avatars/brown_2.jpg'),
+  avatar4: require('@/assets/avatars/brown.jpg'),
+  avatar5: require('@/assets/avatars/green_2.jpg'),
+  avatar6: require('@/assets/avatars/green.jpg'),
+  avatar7: require('@/assets/avatars/orange_2.jpg'),
+  avatar8: require('@/assets/avatars/orange.jpg'),
+  avatar9: require('@/assets/avatars/pink_2.jpg'),
+  avatar10: require('@/assets/avatars/pink.jpg'),
+  avatar11: require('@/assets/avatars/red_2.jpg'),
+  avatar12: require('@/assets/avatars/red.jpg'),
+  avatar13: require('@/assets/avatars/violet_2.jpg'),
+  avatar14: require('@/assets/avatars/violet.jpg'),
+  avatar15: require('@/assets/avatars/yellow_2.jpg'),
+  avatar16: require('@/assets/avatars/yellow.jpg'),
+};
 
 export const MOCK_NOTIFICATIONS = [
   {

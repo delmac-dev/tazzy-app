@@ -21,9 +21,10 @@ export default function ScheduleForm() {
 
   return (
     <View className='flex-1 justify-center items-center bg-neutral-50'>
-      <Text>
-        {params.type === 'new' ? 'Create New Schedule' : 'Edit Schedule'}
-      </Text>
+      <Text>schedule type - private, template</Text>
+      <Text>schedule emoji</Text>
+      <Text>schedule color</Text>
+      <Text>schedule name</Text>
     </View>
   )
 }
