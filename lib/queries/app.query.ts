@@ -1,3 +1,5 @@
+import { supabase } from "../supabase"
+import { IScheduleForm } from "../types"
 
 export const getAllSchedules = async () => {
   // all schedules this profile id created or is connected to in the 
@@ -18,8 +20,64 @@ export const removeSchedule = async () => {
   // if its own schedule remove schedule with id schedule_id
 }
 
-export const getScheduleDetail = async () => {
-  // used in the schedule edit form to prefill the edit form
+export const getScheduleDetail = async ({id}:{id: string}) => {
+  if (!id) return null;
+
+  const { data, error } = await supabase
+    .from('schedules')
+    .select('accessibility, emoji, color, name, status')
+    .eq('id', id)
+    .single();
+
+  if (error) throw error;
+
+  return data;
+};
+
+export const updateSchedule = async ({id, data}:{id:string, data:IScheduleForm}) => {
+  const { data: updatedRow, error } = await supabase
+    .from('schedules')
+    .update(data)
+    .eq('id', id)
+    .select('id, accessibility, emoji, color, name, status')
+    .single();
+
+  if (error) throw error;
+
+  return updatedRow;
+};
+
+export const createSchedule = async ({data}:{data:IScheduleForm}) => {
+  const { data: { session } , error: sessionError } = await supabase.auth.getSession();
+
+  if (sessionError) throw sessionError;
+  if (!session?.user) throw new Error("No user session found");
+
+  const ownerID = session?.user?.id;
+
+  const { data: schedule, error: scheduleError } = await supabase
+    .from('schedules')
+    .insert({ ...data, owner_id: ownerID })
+    .select('id, accessibility, emoji, color, name, status')
+    .single();
+
+  if (scheduleError) throw scheduleError;
+
+  const { error: linkError } = await supabase
+    .from('account_schedule')
+    .insert({
+      account_id: ownerID,
+      schedule_id: schedule.id,
+      access_level: 'owner',
+    });
+  
+  if (linkError) {
+    await supabase.from('schedules').delete().eq('id', schedule.id);
+    console.error('Error linking user to schedule, schedule rolled back.');
+    throw linkError;
+  }
+
+  return schedule;
 }
 
 export const getScheduleActivities = async () => {
@@ -30,9 +88,6 @@ export const getActivityChildren = async () => {
   // get the recurring instances/reschedules/extras activities connected to parent activity
 }
 
-export const createSchedule = async () => {
-
-}
 
 export const useTemplate = async () => {
   

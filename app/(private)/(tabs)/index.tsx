@@ -40,7 +40,7 @@ const renderItem = useCallback(({ item }: { item: any}) => (
             </Pressable>
           </View>
         </View>
-        <View className='flex-row items-center justify-start gap-3 bg-red-400' style={{ height: SCREEN_WIDTH * 0.17 }}>
+        <View className='flex-row items-center justify-start gap-3' style={{ height: SCREEN_WIDTH * 0.17 }}>
           {Array.from({ length: 5 }).map((_, index) => (
             <View key={index} className='aspect-square h-full justify-center items-center rounded-full bg-neutral-100 border border-neutral-200'>
               <Text className='text-sm font-semibold text-neutral-600'>

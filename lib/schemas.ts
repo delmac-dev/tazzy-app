@@ -26,3 +26,11 @@ export const ZUpdateProfile = z.object({
     .min(3, 'Username must be at least 3 characters long')
     .regex(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores'),
 });
+
+export const ZScheduleForm = z.object({
+  accessibility: z.string(),
+  status: z.string(),
+  emoji: z.string(),
+  color: z.string(),
+  name: z.string()
+});

@@ -39,14 +39,14 @@ export type Database = {
   }
   public: {
     Tables: {
-      account_template: {
+      account_schedule: {
         Row: {
           access_level: string
           account_id: string
           created_at: string
           id: string
           muted_activities: string[] | null
-          template_id: string
+          schedule_id: string
           updated_at: string
         }
         Insert: {
@@ -55,7 +55,7 @@ export type Database = {
           created_at?: string
           id?: string
           muted_activities?: string[] | null
-          template_id: string
+          schedule_id: string
           updated_at?: string
         }
         Update: {
@@ -64,20 +64,20 @@ export type Database = {
           created_at?: string
           id?: string
           muted_activities?: string[] | null
-          template_id?: string
+          schedule_id?: string
           updated_at?: string
         }
         Relationships: [
           {
-            foreignKeyName: "account_template_account_id_fkey"
+            foreignKeyName: "account_schedule_account_id_fkey"
             columns: ["account_id"]
             isOneToOne: false
             referencedRelation: "accounts"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "account_template_template_id_fkey"
-            columns: ["template_id"]
+            foreignKeyName: "account_schedule_schedule_id_fkey"
+            columns: ["schedule_id"]
             isOneToOne: false
             referencedRelation: "schedules"
             referencedColumns: ["id"]

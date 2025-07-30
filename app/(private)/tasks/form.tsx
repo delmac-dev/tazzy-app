@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
-import { IFormType } from '~/lib/types';
+import { IScreenFormParams } from '~/lib/types';
 import { useLayoutEffect } from 'react';
 
 export default function TaskForm() {
-  const params = useLocalSearchParams<IFormType>();
+  const params = useLocalSearchParams<IScreenFormParams>();
   const navigation = useNavigation();
 
   useLayoutEffect(() => {

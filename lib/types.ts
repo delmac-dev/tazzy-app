@@ -1,10 +1,12 @@
 import z from "zod";
-import { ZUpdateProfile, ZSignIn, ZSignUp } from "./schemas";
+import * as schema from "./schemas";
 
-export type ISignUp = z.infer<typeof ZSignUp>;
-export type ISignIn = z.infer<typeof ZSignIn>;
-export type IUpdateProfile = z.infer<typeof ZUpdateProfile>;
+export type ISignUp = z.infer<typeof schema.ZSignUp>;
+export type ISignIn = z.infer<typeof schema.ZSignIn>;
+export type IUpdateProfile = z.infer<typeof schema.ZUpdateProfile>;
+export type IScheduleForm = z.infer<typeof schema.ZScheduleForm>;
 
-export type IFormType = {
-  type: string
+export type IScreenFormParams = {
+  type: string,
+  id: string
 }
